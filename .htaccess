@@ -1,0 +1,26 @@
+Options -Indexes
+
+<IfModule mod_rewrite.c>
+    Options +SymLinksIfOwnerMatch
+    RewriteEngine On
+
+    # Pass login/authorization headers to Laravel
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Already going to index.php or public/ -> stop
+    RewriteRule ^index\.php$ - [L]
+    RewriteRule ^public/ - [L]
+
+    # CSS, JS, images, admin assets, uploads -> serve from public/
+    RewriteRule ^((css|js|img|images|fonts|cms|storage|build|vendor-assets)/.*)$ public/$1 [L]
+    RewriteRule ^(favicon\.ico|robots\.txt|sitemap\.xml)$ public/$1 [L]
+
+    # Everything else -> Laravel
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# Block private files
+<FilesMatch "^(\.env.*|artisan|composer\.(json|lock)|package(-lock)?\.json|.*\.md|phpunit\.xml|vite\.config\.js|.*\.sql|.*\.zip)$">
+    Require all denied
+</FilesMatch>

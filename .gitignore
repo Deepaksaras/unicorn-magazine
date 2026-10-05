@@ -1,0 +1,17 @@
+/vendor
+/node_modules
+/public/storage
+/public/hot
+/public/build
+/storage/*.key
+.env
+.env.*
+!.env.example
+*.zip
+*.log
+.phpunit.result.cache
+/.idea
+/.vscode
+Thumbs.db
+.DS_Store
+/public/css/custom_live.css

@@ -1,0 +1,13 @@
+# The Unicorn Magazine
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /login
+Disallow: /search
+Disallow: /s/
+Disallow: /ad/
+Disallow: /t/
+Disallow: /subscribe
+Disallow: /page-not-found
+
+Sitemap: https://theunicornmagazine.com/sitemap.xml
