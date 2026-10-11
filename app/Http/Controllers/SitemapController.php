@@ -29,8 +29,8 @@ class SitemapController extends Controller
     protected function build(): string
     {
         $urls = [];
-        $add = function (string $loc, $lastmod = null, string $freq = 'weekly', string $priority = '0.6') use (&$urls) {
-            $urls[$loc] = [$lastmod ? $lastmod->toAtomString() : null, $freq, $priority];
+        $add = function (string $loc, $lastmod = null, string $freq = 'weekly', string $priority = '0.6', ?string $image = null) use (&$urls) {
+            $urls[$loc] = [$lastmod ? $lastmod->toAtomString() : null, $freq, $priority, $image];
         };
         $hidden = fn ($model) => $model->seoMeta && str_contains((string) $model->seoMeta->robots, 'noindex');
 
@@ -70,9 +70,10 @@ class SitemapController extends Controller
         }
 
         // Articles
-        foreach ($this->safe(fn () => Post::published()->with('seoMeta')->orderByDesc('published_at')->limit(20000)->get(['id', 'slug', 'updated_at', 'published_at'])) ?: [] as $post) {
+        foreach ($this->safe(fn () => Post::published()->with('seoMeta')->orderByDesc('published_at')->limit(20000)->get(['id', 'slug', 'title', 'featured_image', 'updated_at', 'published_at'])) ?: [] as $post) {
             if (!$hidden($post)) {
-                $add(route('article', $post->slug), $post->updated_at ?: $post->published_at, 'weekly', '0.8');
+                $image = $post->featured_image ? \App\Support\Media::url($post->featured_image) : null;
+                $add(route('article', $post->slug), $post->updated_at ?: $post->published_at, 'weekly', '0.8', $image);
             }
         }
 
@@ -89,11 +90,13 @@ class SitemapController extends Controller
         }
 
         $xml = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
-        $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
-        foreach ($urls as $loc => [$lastmod, $freq, $priority]) {
+        $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">' . "\n";
+        foreach ($urls as $loc => [$lastmod, $freq, $priority, $image]) {
             $xml .= '  <url><loc>' . htmlspecialchars($loc, ENT_XML1) . '</loc>'
                 . ($lastmod ? '<lastmod>' . $lastmod . '</lastmod>' : '')
-                . '<changefreq>' . $freq . '</changefreq><priority>' . $priority . '</priority></url>' . "\n";
+                . '<changefreq>' . $freq . '</changefreq><priority>' . $priority . '</priority>'
+                . ($image ? '<image:image><image:loc>' . htmlspecialchars($image, ENT_XML1) . '</image:loc></image:image>' : '')
+                . '</url>' . "\n";
         }
 
         return $xml . '</urlset>' . "\n";

@@ -17,3 +17,24 @@
         </nav>
     </div>
 </div>
+
+{{-- The same trail as structured data, so Google can show it under the result --}}
+@php
+    $crumbPosition = 0;
+    $crumbList = [];
+    $crumbList[] = ['@type' => 'ListItem', 'position' => ++$crumbPosition, 'name' => 'Home', 'item' => route('home')];
+    $crumbLast = array_key_last($items);
+    foreach ($items as $crumbLabel => $crumbLink) {
+        $crumb = ['@type' => 'ListItem', 'position' => ++$crumbPosition, 'name' => (string) $crumbLabel];
+        if ($crumbLink && $crumbLabel !== $crumbLast) {
+            $crumb['item'] = $crumbLink;
+        }
+        $crumbList[] = $crumb;
+    }
+@endphp
+<script type="application/ld+json">{!! json_encode([
+    '@context' => 'https://schema.org',
+    '@type' => 'BreadcrumbList',
+    '@id' => url()->current() . '#breadcrumb',
+    'itemListElement' => $crumbList,
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG) !!}</script>

@@ -26,9 +26,34 @@ class AppServiceProvider extends ServiceProvider
         Paginator::useBootstrapFive();
 
         $this->ensureStorageLink();
+        $this->refreshFeedsOnChange();
 
         Blade::component('admin-layout', \App\View\Components\AdminLayout::class);
         Blade::component('front-layout', \App\View\Components\FrontLayout::class);
+    }
+
+    /**
+     * When an article, profile or report is saved, forget the cached
+     * /sitemap.xml and /feed so the new story is listed within seconds
+     * instead of waiting for the cache to expire. Faster discovery by Google.
+     */
+    protected function refreshFeedsOnChange(): void
+    {
+        $forget = function () {
+            \Illuminate\Support\Facades\Cache::forget('sitemap.xml');
+            \Illuminate\Support\Facades\Cache::forget('feed.rss');
+        };
+
+        foreach ([
+            \App\Models\Post::class,
+            \App\Models\Profile::class,
+            \App\Models\Report::class,
+            \App\Models\Category::class,
+            \App\Models\Tag::class,
+        ] as $model) {
+            $model::saved($forget);
+            $model::deleted($forget);
+        }
     }
 
     /**

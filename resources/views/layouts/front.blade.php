@@ -44,6 +44,13 @@
         'image' => $__env->yieldContent('og_image'),
     ]) !!}
 
+    {{-- Structured data (JSON-LD): tells Google this is a news article / person / list,
+         who published it and when. Needed for Top stories, Discover and rich results. --}}
+    {!! \App\Support\Schema::render() !!}
+
+    {{-- News feed for readers and aggregators --}}
+    <link rel="alternate" type="application/rss+xml" title="{{ $siteName }} – Latest stories" href="{{ route('feed') }}">
+
     <!-- favicon icon -->
     <link rel="shortcut icon" href="{{ $favicon }}">
 

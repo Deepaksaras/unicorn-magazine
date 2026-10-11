@@ -32,6 +32,12 @@ class Seo
 
     protected static array $data = [];
 
+    /** The record this page is about (article, profile, report, category…), for Schema. */
+    protected static ?Model $model = null;
+
+    /** The finished values from the last render(), reused by Schema. */
+    protected static array $resolved = [];
+
     /** Set values directly (lowest level). Later calls override earlier ones; empty values are ignored. */
     public static function set(array $values): void
     {
@@ -49,6 +55,7 @@ class Seo
     public static function model(?Model $model, array $fallback = []): void
     {
         static::$data = [];
+        static::$model = $model;
         static::set($fallback);
 
         if (!$model) {
@@ -85,6 +92,7 @@ class Seo
     public static function page(string $key, array $fallback = []): void
     {
         static::$data = [];
+        static::$model = null;
         [, , $title, $description] = self::PAGES[$key] ?? ['', '', '', ''];
         static::set(['title' => $title, 'description' => $description]);
         static::set($fallback);
@@ -101,6 +109,19 @@ class Seo
     public static function reset(): void
     {
         static::$data = [];
+        static::$model = null;
+    }
+
+    /** The record this page is about, or null for a listing page. */
+    public static function subject(): ?Model
+    {
+        return static::$model;
+    }
+
+    /** The finished values from render(); used by App\Support\Schema. */
+    public static function resolved(): array
+    {
+        return static::$resolved;
     }
 
     public static function get(string $key, $default = null)
@@ -174,7 +195,7 @@ class Seo
     /** All SEO tags for <head>. */
     public static function render(array $viewFallback = []): string
     {
-        $s = static::resolve($viewFallback);
+        $s = static::$resolved = static::resolve($viewFallback);
         $e = fn ($v) => e($v);
         $tags = [];
 

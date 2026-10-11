@@ -4,6 +4,7 @@ use App\Http\Controllers\AdClickController;
 use App\Http\Controllers\AdViewController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FeedController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfilesController;
@@ -64,6 +65,11 @@ Route::get('/terms-conditions', [PageController::class, 'terms'])->name('terms')
 
 // 404 page preview (the "View page" button in Admin → Pages → Page Not Found)
 Route::get('/page-not-found', fn () => response()->view('errors.404', [], 404))->name('not-found');
+
+/* ---------- RSS feed (readers, aggregators, auto-posting tools) ---------- */
+Route::get('/feed', FeedController::class)->name('feed');
+Route::redirect('/rss', '/feed', 301);
+Route::redirect('/feed.xml', '/feed', 301);
 
 /* ---------- Sitemap for Google (built automatically; listed in public/robots.txt) ---------- */
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
