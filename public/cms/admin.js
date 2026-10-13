@@ -88,11 +88,17 @@
 
     /* ---------------- Character counters ---------------- */
     document.querySelectorAll('[data-count]').forEach(function (input) {
-        var max = parseInt(input.getAttribute('maxlength') || input.getAttribute('data-count'), 10);
+        // data-count is the RECOMMENDED length (e.g. 60 for an SEO title);
+        // maxlength is only the database limit, so it must not win here.
+        var max = parseInt(input.getAttribute('data-count') || input.getAttribute('maxlength'), 10);
         var badge = document.createElement('div');
-        badge.className = 'form-text text-end';
+        badge.className = 'form-text text-end a-count';
         input.insertAdjacentElement('afterend', badge);
-        var update = function () { badge.textContent = input.value.length + ' / ' + max; };
+        var update = function () {
+            var n = input.value.length;
+            badge.textContent = n + ' / ' + max;
+            badge.classList.toggle('is-over', n > max);
+        };
         input.addEventListener('input', update);
         update();
     });

@@ -57,7 +57,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Merriweather:wght@700;900&display=swap" rel="stylesheet">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/remixicon.css') }}" rel="stylesheet">
-    <link href="{{ asset('cms/admin.css') }}?v=4" rel="stylesheet">
+    <link href="{{ asset('cms/admin.css') }}?v=5" rel="stylesheet">
     @stack('styles')
 </head>
 <body class="admin-body" data-upload-url="{{ route('admin.media.upload') }}">
@@ -190,7 +190,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
 @stack('editor')
-<script src="{{ asset('cms/admin.js') }}?v=6"></script>
+<script src="{{ asset('cms/admin.js') }}?v=7"></script>
 @stack('scripts')
 </body>
 </html>

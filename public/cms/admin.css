@@ -544,3 +544,6 @@ a:hover { color: var(--gold-600); }
 .a-seo-desc { font-size: 13px; line-height: 1.5; color: #4d5156; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .a-seo-more > summary { cursor: pointer; font-size: 13px; font-weight: 600; color: var(--muted); padding: 6px 0; }
 .a-seo-more > summary:hover { color: var(--text); }
+
+/* Character counter under SEO title / description: amber once past the recommended length */
+.a-count.is-over { color: #b45309; font-weight: 600; }
