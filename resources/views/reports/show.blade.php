@@ -17,6 +17,11 @@
 @section('description', Str::limit(strip_tags($report->description ?: $report->content), 160))
 @section('og_image', $report->cover_url)
 
+{{-- CSS used only on this page. Loaded after custom.css, so it wins. --}}
+@push('styles')
+    <link href="{{ asset('css/report-detail.css') }}?v={{ @filemtime(public_path('css/report-detail.css')) ?: 1 }}" rel="stylesheet">
+@endpush
+
 @section('content')
 
 @include('partials.breadcrumb', ['items' => ['Reports' => route('reports.index'), $report->title => null]])

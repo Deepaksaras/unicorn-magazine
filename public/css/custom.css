@@ -10399,21 +10399,3 @@ img, video, iframe { max-width: 100%; }
     .subscribe-modal .modal-content { max-height: calc(100vh - 24px); max-height: calc(100dvh - 24px); overflow-y: auto; }
     .offcanvas.offcanvas-end { width: min(88vw, 360px); }
 }
-
-
-/* =========================================================
-   REPORT DETAIL PAGE – same hero as an article
-   (the Download / All reports buttons sit under the meta line)
-========================================================= */
-.featured-large-content.detail-page .detail-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-top: 18px;
-}
-.featured-large-content.detail-page .report-badge { vertical-align: middle; }
-
-@media (max-width: 575.98px) {
-    .featured-large-content.detail-page .detail-actions { gap: 8px; margin-top: 14px; }
-    .featured-large-content.detail-page .detail-actions .um-btn { flex: 1 1 100%; justify-content: center; }
-}
