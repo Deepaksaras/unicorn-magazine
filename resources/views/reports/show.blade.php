@@ -21,60 +21,60 @@
 
 @include('partials.breadcrumb', ['items' => ['Reports' => route('reports.index'), $report->title => null]])
 
-<!-- =========================================================
-     REPORT HERO
-========================================================= -->
-<section class="featured-stories">
-    <div class="container-fluid px-4 px-lg-5">
-
-        @if(session('success'))
-            <div class="cms-alert cms-alert-success"><i class="ri-information-line"></i><span>{{ session('success') }}</span></div>
-        @endif
-
-        <div class="report-hero detail">
-            <div class="report-hero-cover">
-                <img src="{{ $report->cover_url }}" alt="{{ $report->title }}">
-            </div>
-            <div class="report-hero-body">
-                <div class="report-meta mb-2">
-                    <span class="report-category">{{ $report->type_label }}</span>
-                    @if($report->is_exclusive)<span class="report-badge"><i class="ri-vip-crown-line"></i> Exclusive</span>@endif
-                </div>
-                <h1 class="report-hero-title">{{ $report->title }}</h1>
-                @if($report->description)
-                    <p class="report-hero-text">{{ $report->description }}</p>
-                @endif
-                <div class="featured-meta dark">
-                    <span>By {{ $report->author_name ?: 'Research Desk' }}</span>
-                    <span class="meta-dot"></span>
-                    <span>{{ $report->display_date->format('M d, Y') }}</span>
-                    @if($report->file_info)
-                        <span class="meta-dot"></span>
-                        <span>{{ $report->file_info }}</span>
-                    @endif
-                </div>
-                <div class="d-flex flex-wrap gap-2 mt-auto pt-3">
-                    @if($report->download_url)
-                        <a href="{{ $report->download_url }}" class="um-btn" @if(!$report->file_path) target="_blank" rel="noopener" @endif>
-                            <i class="{{ $report->file_path ? 'ri-download-line' : 'ri-external-link-line' }}"></i>
-                            {{ $report->file_path ? 'Download report' : 'Open report' }}
-                        </a>
-                    @endif
-                    <a href="{{ route('reports.index') }}" class="um-btn um-btn-outline">All reports</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- =========================================================
-     CONTENT + SIDEBAR
-========================================================= -->
 <div class="container-fluid px-4 px-lg-5">
+
+    @if(session('success'))
+        <div class="cms-alert cms-alert-success"><i class="ri-information-line"></i><span>{{ session('success') }}</span></div>
+    @endif
+
     <div class="row g-5">
         <div class="col-lg-9">
 
+            <!-- =========================================================
+                 REPORT HERO (same structure as the article page)
+            ========================================================= -->
+            <div class="featured-grid detail-page">
+                <article class="featured-card featured-card-large">
+                    <div class="featured-card-image">
+                        <img src="{{ $report->cover_url }}" alt="{{ $report->title }}">
+                        <span class="featured-image-overlay"></span>
+                        <div class="featured-large-content detail-page">
+                            <span class="story-category">{{ $report->type_label }}</span>
+                            @if($report->is_exclusive)
+                                <span class="report-badge ms-2"><i class="ri-vip-crown-line"></i> Exclusive</span>
+                            @endif
+                            <h1 class="featured-large-title">{{ $report->title }}</h1>
+                            @if($report->description)
+                                <p class="featured-description">{{ $report->description }}</p>
+                            @endif
+                            <div class="featured-meta">
+                                <span>By {{ $report->author_name ?: 'Research Desk' }}</span>
+                                <span class="meta-dot"></span>
+                                <span>{{ $report->display_date->format('M d, Y') }}</span>
+                                @if($report->file_info)
+                                    <span class="meta-dot"></span>
+                                    <span>{{ $report->file_info }}</span>
+                                @endif
+                            </div>
+                            <div class="detail-actions">
+                                @if($report->download_url)
+                                    <a href="{{ $report->download_url }}" class="um-btn" @if(!$report->file_path) target="_blank" rel="noopener" @endif>
+                                        <i class="{{ $report->file_path ? 'ri-download-line' : 'ri-external-link-line' }}"></i>
+                                        {{ $report->file_path ? 'Download report' : 'Open report' }}
+                                    </a>
+                                @endif
+                                <a href="{{ route('reports.index') }}" class="um-btn um-btn-outline">All reports</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- =========================================================
+                 REPORT BODY
+            ========================================================= -->
             <article class="post-detail-content">
+
                 @include('partials.share-bar', ['url' => $report->short_url, 'title' => $report->title])
 
                 <div class="post-body">
@@ -98,6 +98,7 @@
                         </div>
                     @endif
                 </div>
+
             </article>
 
             @include('partials.ads.banner', ['placement' => 'in-content-ad'])
@@ -130,10 +131,14 @@
             'link' => route('reports.index'),
             'class' => 'mt-4',
         ])
+
         <div class="reports-list mb-4">
             @include('partials.cards.report-items', ['reports' => $more])
         </div>
     @endif
+
+    @include('partials.ads.banner', ['placement' => 'in-content-ad'])
+
 </div>
 
 @endsection
