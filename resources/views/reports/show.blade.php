@@ -20,7 +20,9 @@
 {{-- =========================================================
      CSS FOR THIS PAGE ONLY
      Loads after custom.css, so anything here wins without !important.
-     Change the report detail page design from this block.
+     The hero itself uses the .featured-grid.detail-page styling that
+     already lives in custom.css (same as an article page), so only the
+     report-specific extras are written here.
 ========================================================= --}}
 @push('styles')
 <style>
@@ -46,56 +48,7 @@
     .um-btn-outline { background: #fff; color: #111; }
     .um-btn-outline:hover { background: #111; color: #fff; }
 
-    /* ---- Report hero (cover on the left, details on the right) ---- */
-    .report-hero {
-        display: grid;
-        grid-template-columns: 300px 1fr;
-        gap: 40px;
-        align-items: stretch;
-        padding: 28px;
-        border: 1px solid #e5e5e5;
-        border-radius: 16px;
-        background: linear-gradient(135deg, #fbf8f2, #fff 60%);
-        color: #111;
-        text-decoration: none;
-        transition: box-shadow .3s ease, border-color .3s ease;
-    }
-    .report-hero-cover {
-        position: relative;
-        aspect-ratio: 3 / 4;
-        border-radius: 10px;
-        overflow: hidden;
-        background: #e9e9e9;
-        box-shadow: 0 18px 40px rgba(0, 0, 0, .18);
-    }
-    .report-hero-cover img {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-    .report-hero-body {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        min-width: 0;
-        padding: 8px 0;
-    }
-    .report-hero-title {
-        margin: 6px 0 14px;
-        font-family: "Merriweather", Georgia, serif;
-        font-size: clamp(26px, 2.6vw, 38px);
-        font-weight: 700;
-        line-height: 1.18;
-        color: #111;
-    }
-    .report-hero-text {
-        margin: 0 0 18px;
-        max-width: 640px;
-        color: #555;
-        font-size: 15px;
-        line-height: 1.7;
-    }
+    /* ---- "Exclusive" pill next to the type chip ---- */
     .report-badge {
         display: inline-flex;
         align-items: center;
@@ -107,11 +60,18 @@
         font-size: 11px;
         font-weight: 700;
         letter-spacing: .4px;
+        vertical-align: middle;
     }
-    .featured-meta.dark { margin-bottom: 18px; color: #666; }
-    .featured-meta.dark .meta-dot { background: #bbb; }
 
-    /* ---- Headings inside the article body ---- */
+    /* ---- Download / All reports buttons under the meta line ---- */
+    .featured-large-content.detail-page .detail-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+    }
+
+    /* ---- Headings inside the body ---- */
     .detail-heading {
         margin: 8px 0 16px;
         font-family: "Merriweather", Georgia, serif;
@@ -167,15 +127,8 @@
     .facts-card dt { color: #777; font-weight: 500; }
     .facts-card dd { margin: 0; color: #111; font-weight: 600; text-align: right; }
 
-    /* ---- Tablets ---- */
-    @media (max-width: 1199.98px) {
-        .report-hero { grid-template-columns: 240px 1fr; gap: 28px; }
-    }
-
     /* ---- Phones ---- */
     @media (max-width: 767.98px) {
-        .report-hero { grid-template-columns: 1fr; gap: 20px; padding: 18px; }
-        .report-hero-cover { max-width: 220px; }
         .report-download-box { flex-direction: column; align-items: flex-start; }
 
         /* One report per row in the "More Reports" list */
@@ -206,6 +159,11 @@
         .report-arrow i { font-size: 17px; }
     }
 
+    @media (max-width: 575.98px) {
+        .featured-large-content.detail-page .detail-actions { gap: 8px; margin-top: 14px; }
+        .featured-large-content.detail-page .detail-actions .um-btn { flex: 1 1 100%; justify-content: center; }
+    }
+
     @media (max-width: 359.98px) {
         .report-item { grid-template-columns: 1fr; }
         .report-image { height: 170px; }
@@ -217,60 +175,60 @@
 
 @include('partials.breadcrumb', ['items' => ['Reports' => route('reports.index'), $report->title => null]])
 
-<!-- =========================================================
-     REPORT HERO
-========================================================= -->
-<section class="featured-stories">
-    <div class="container-fluid px-4 px-lg-5">
-
-        @if(session('success'))
-            <div class="cms-alert cms-alert-success"><i class="ri-information-line"></i><span>{{ session('success') }}</span></div>
-        @endif
-
-        <div class="report-hero detail">
-            <div class="report-hero-cover">
-                <img src="{{ $report->cover_url }}" alt="{{ $report->title }}">
-            </div>
-            <div class="report-hero-body">
-                <div class="report-meta mb-2">
-                    <span class="report-category">{{ $report->type_label }}</span>
-                    @if($report->is_exclusive)<span class="report-badge"><i class="ri-vip-crown-line"></i> Exclusive</span>@endif
-                </div>
-                <h1 class="report-hero-title">{{ $report->title }}</h1>
-                @if($report->description)
-                    <p class="report-hero-text">{{ $report->description }}</p>
-                @endif
-                <div class="featured-meta dark">
-                    <span>By {{ $report->author_name ?: 'Research Desk' }}</span>
-                    <span class="meta-dot"></span>
-                    <span>{{ $report->display_date->format('M d, Y') }}</span>
-                    @if($report->file_info)
-                        <span class="meta-dot"></span>
-                        <span>{{ $report->file_info }}</span>
-                    @endif
-                </div>
-                <div class="d-flex flex-wrap gap-2 mt-auto pt-3">
-                    @if($report->download_url)
-                        <a href="{{ $report->download_url }}" class="um-btn" @if(!$report->file_path) target="_blank" rel="noopener" @endif>
-                            <i class="{{ $report->file_path ? 'ri-download-line' : 'ri-external-link-line' }}"></i>
-                            {{ $report->file_path ? 'Download report' : 'Open report' }}
-                        </a>
-                    @endif
-                    <a href="{{ route('reports.index') }}" class="um-btn um-btn-outline">All reports</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- =========================================================
-     CONTENT + SIDEBAR
-========================================================= -->
 <div class="container-fluid px-4 px-lg-5">
+
+    @if(session('success'))
+        <div class="cms-alert cms-alert-success"><i class="ri-information-line"></i><span>{{ session('success') }}</span></div>
+    @endif
+
     <div class="row g-5">
         <div class="col-lg-9">
 
+            <!-- =========================================================
+                 REPORT HERO (same structure as an article page)
+            ========================================================= -->
+            <div class="featured-grid detail-page">
+                <article class="featured-card featured-card-large">
+                    <div class="featured-card-image">
+                        <img src="{{ $report->cover_url }}" alt="{{ $report->title }}">
+                        <span class="featured-image-overlay"></span>
+                        <div class="featured-large-content detail-page">
+                            <span class="story-category">{{ $report->type_label }}</span>
+                            @if($report->is_exclusive)
+                                <span class="report-badge ms-2"><i class="ri-vip-crown-line"></i> Exclusive</span>
+                            @endif
+                            <h1 class="featured-large-title">{{ $report->title }}</h1>
+                            @if($report->description)
+                                <p class="featured-description">{{ $report->description }}</p>
+                            @endif
+                            <div class="featured-meta">
+                                <span>By {{ $report->author_name ?: 'Research Desk' }}</span>
+                                <span class="meta-dot"></span>
+                                <span>{{ $report->display_date->format('M d, Y') }}</span>
+                                @if($report->file_info)
+                                    <span class="meta-dot"></span>
+                                    <span>{{ $report->file_info }}</span>
+                                @endif
+                            </div>
+                            <div class="detail-actions">
+                                @if($report->download_url)
+                                    <a href="{{ $report->download_url }}" class="um-btn" @if(!$report->file_path) target="_blank" rel="noopener" @endif>
+                                        <i class="{{ $report->file_path ? 'ri-download-line' : 'ri-external-link-line' }}"></i>
+                                        {{ $report->file_path ? 'Download report' : 'Open report' }}
+                                    </a>
+                                @endif
+                                <a href="{{ route('reports.index') }}" class="um-btn um-btn-outline">All reports</a>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <!-- =========================================================
+                 REPORT BODY
+            ========================================================= -->
             <article class="post-detail-content">
+
                 @include('partials.share-bar', ['url' => $report->short_url, 'title' => $report->title])
 
                 <div class="post-body">
@@ -294,6 +252,7 @@
                         </div>
                     @endif
                 </div>
+
             </article>
 
             @include('partials.ads.banner', ['placement' => 'in-content-ad'])
@@ -326,10 +285,14 @@
             'link' => route('reports.index'),
             'class' => 'mt-4',
         ])
+
         <div class="reports-list mb-4">
             @include('partials.cards.report-items', ['reports' => $more])
         </div>
     @endif
+
+    @include('partials.ads.banner', ['placement' => 'in-content-ad'])
+
 </div>
 
 @endsection

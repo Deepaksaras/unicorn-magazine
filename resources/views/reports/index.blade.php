@@ -135,8 +135,20 @@
 
     /* ---- Phones ---- */
     @media (max-width: 767.98px) {
-        .report-hero { grid-template-columns: 1fr; gap: 20px; padding: 18px; }
-        .report-hero-cover { max-width: 220px; }
+        .report-hero { grid-template-columns: 1fr; gap: 18px; padding: 16px; }
+
+        /* Cover goes full width and landscape on phones – a 3/4 portrait
+           box crops a wide cover photo down to a thin strip. */
+        .report-hero-cover {
+            max-width: 100%;
+            aspect-ratio: 16 / 9;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, .12);
+        }
+        .report-hero-body { padding: 0; }
+        .report-hero-title { margin: 4px 0 10px; font-size: 22px; line-height: 1.3; }
+        .report-hero-text { margin-bottom: 14px; font-size: 14px; line-height: 1.6; }
+        .featured-meta.dark { margin-bottom: 14px; }
+        .report-hero .um-btn { width: 100%; justify-content: center; }
 
         /* Chips scroll sideways instead of wrapping into three rows */
         .type-chips {
