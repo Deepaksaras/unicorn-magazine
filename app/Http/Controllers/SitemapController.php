@@ -18,6 +18,13 @@ use Illuminate\Support\Facades\Cache;
  */
 class SitemapController extends Controller
 {
+    /**
+     * How many published articles a tag needs before it is listed.
+     * Change this one number to make the sitemap stricter or looser:
+     * 1 lists every tag (the old behaviour), 5 only the busiest ones.
+     */
+    public const TAG_MIN_POSTS = 3;
+
     public function __invoke()
     {
         // rebuilt at most every 30 minutes
@@ -63,7 +70,20 @@ class SitemapController extends Controller
                 $add(route('category', $category->slug), null, 'daily', '0.8');
             }
         }
-        foreach ($this->safe(fn () => Tag::with('seoMeta')->where('status', 1)->whereHas('posts', fn ($q) => $q->published())->get()) ?: [] as $tag) {
+
+        /*
+         * Tags need at least TAG_MIN_POSTS published articles to be listed.
+         *
+         * A tag used on a single story is almost all header, footer and
+         * sidebar - the same boilerplate on every one of them. Handing Google
+         * hundreds of near-identical thin pages is a poor signal for a young
+         * site, so those tags stay reachable through the articles themselves
+         * but are not pushed in the sitemap. A tag joins the sitemap on its
+         * own as soon as it reaches the limit; nothing has to be done by hand.
+         */
+        foreach ($this->safe(fn () => Tag::with('seoMeta')->where('status', 1)
+            ->whereHas('posts', fn ($q) => $q->published(), '>=', self::TAG_MIN_POSTS)
+            ->get()) ?: [] as $tag) {
             if (!$hidden($tag)) {
                 $add(route('tag', $tag->slug), null, 'weekly', '0.4');
             }
