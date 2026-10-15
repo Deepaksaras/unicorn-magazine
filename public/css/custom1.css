@@ -1,0 +1,1278 @@
+/* =========================================================
+   custom1.css  –  ADD-ON STYLES ONLY
+   =========================================================
+   Load this AFTER custom.css:
+
+       <link rel="stylesheet" href="css/custom.css">
+       <link rel="stylesheet" href="css/custom1.css">
+
+   Everything custom.css already handles has been removed from
+   this file, so the two no longer fight each other. What is
+   left here are only the rules custom.css does not have:
+   article body text and media, profile pages, report pages and
+   a few mobile fixes.
+========================================================= */
+
+.post-body img {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    height: auto !important;
+    border-radius: 14px;
+    margin: 28px 0;
+}
+
+.post-body figure.image {
+    margin: 28px 0;
+}
+
+.post-body figure.image img {
+    margin: 0;
+}
+
+.post-body figure.image figcaption {
+    font-size: 13px;
+    color: var(--muted, #777);
+    text-align: center;
+    margin-top: 10px;
+}
+
+.post-body iframe,
+.post-body video {
+    display: block;
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16 / 9;
+    border: 0;
+    border-radius: 14px;
+    margin: 28px 0;
+}
+
+.type-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 0 26px;
+}
+
+.type-chips a {
+    display: inline-flex;
+    align-items: center;
+    height: 36px;
+    padding: 0 16px;
+    border: 1px solid #e5e5e5;
+    border-radius: 50px;
+    color: #333;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all .25s ease;
+}
+
+.type-chips a:hover {
+    border-color: #111;
+    color: #111;
+}
+
+.type-chips a.active {
+    background: #111;
+    border-color: #111;
+    color: #fff;
+}
+
+.um-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 20px;
+    border: 1px solid #111;
+    border-radius: 7px;
+    background: #111;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background .3s ease, color .3s ease, transform .3s ease;
+    align-self: flex-start;
+}
+
+.um-btn:hover {
+    background: #333;
+    border-color: #333;
+    color: #fff;
+}
+
+.um-btn i {
+    font-size: 16px;
+}
+
+.um-btn-outline {
+    background: #fff;
+    color: #111;
+}
+
+.um-btn-outline:hover {
+    background: #111;
+    color: #fff;
+}
+
+.profile-hero {
+    display: grid;
+    grid-template-columns: 42% 1fr;
+    min-height: 380px;
+    border: 1px solid #e5e5e5;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    color: #111;
+    text-decoration: none;
+    transition: box-shadow .3s ease, border-color .3s ease;
+}
+
+a.profile-hero:hover {
+    color: #111;
+    border-color: #d2d2d2;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, .07);
+}
+
+.profile-hero-image {
+    position: relative;
+    overflow: hidden;
+    background: #e9e9e9;
+    min-height: 300px;
+}
+
+.profile-hero-image img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%);
+    transition: transform .6s ease, filter .4s ease;
+}
+
+a.profile-hero:hover .profile-hero-image img {
+    transform: scale(1.03);
+    filter: grayscale(70%);
+}
+
+.profile-hero-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 36px 40px;
+    min-width: 0;
+}
+
+.profile-hero .story-category {
+    margin-bottom: 14px;
+}
+
+.profile-hero-name {
+    margin: 0 0 8px;
+    font-family: "Merriweather", Georgia, serif;
+    font-size: clamp(28px, 3vw, 42px);
+    font-weight: 700;
+    line-height: 1.12;
+    color: #111;
+}
+
+.profile-hero-role {
+    color: #b08a4a;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .2px;
+    margin-bottom: 16px;
+}
+
+.profile-hero-text {
+    color: #555;
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0 0 18px;
+    max-width: 560px;
+}
+
+.profile-hero-facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 18px;
+    margin-bottom: 22px;
+    color: #444;
+    font-size: 13px;
+}
+
+.profile-hero-facts:empty {
+    display: none;
+}
+
+.profile-hero-facts span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.profile-hero-facts i {
+    color: #b08a4a;
+    font-size: 16px;
+}
+
+.profile-hero.detail {
+    min-height: 460px;
+}
+
+.profile-hero.detail .profile-hero-body {
+    justify-content: center;
+    padding: 48px 52px;
+}
+
+.profile-links {
+    display: flex;
+    gap: 10px;
+}
+
+.profile-links a {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e5e5e5;
+    border-radius: 50%;
+    color: #111;
+    font-size: 17px;
+    text-decoration: none;
+    transition: all .25s ease;
+}
+
+.profile-links a:hover {
+    background: #111;
+    border-color: #111;
+    color: #fff;
+}
+
+.profiles-grid.listing {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.detail-heading {
+    font-family: "Merriweather", Georgia, serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin: 8px 0 16px;
+    color: #111;
+}
+
+.post-body .detail-heading:not(:first-child) {
+    margin-top: 34px;
+}
+
+.achievement-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 10px;
+    display: grid;
+    gap: 10px;
+}
+
+.achievement-list li {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    padding: 14px 16px;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    background: #fafafa;
+    line-height: 1.55;
+}
+
+.achievement-list i {
+    color: #b08a4a;
+    font-size: 20px;
+    line-height: 1.2;
+}
+
+.profile-story-card {
+    position: relative;
+    display: block;
+    margin-top: 30px;
+    padding: 22px 60px 22px 24px;
+    border-radius: 14px;
+    background: #111;
+    color: #fff;
+    text-decoration: none;
+    transition: background .3s ease;
+}
+
+.profile-story-card:hover {
+    background: #222;
+    color: #fff;
+}
+
+.profile-story-label {
+    display: block;
+    color: #d7b36d;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.profile-story-card strong {
+    font-family: "Merriweather", Georgia, serif;
+    font-size: 18px;
+    line-height: 1.35;
+}
+
+.profile-story-card i {
+    position: absolute;
+    right: 22px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 22px;
+    color: #d7b36d;
+}
+
+.facts-card {
+    border: 1px solid #e5e5e5;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 28px;
+    background: #fff;
+}
+
+.facts-card h3 {
+    font-family: "Merriweather", Georgia, serif;
+    font-size: 17px;
+    font-weight: 700;
+    margin: 0 0 12px;
+}
+
+.facts-card dl {
+    margin: 0;
+}
+
+.facts-card dl>div {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 13px;
+}
+
+.facts-card dl>div:last-child {
+    border-bottom: 0;
+}
+
+.facts-card dt {
+    color: #777;
+    font-weight: 500;
+}
+
+.facts-card dd {
+    margin: 0;
+    color: #111;
+    font-weight: 600;
+    text-align: right;
+}
+
+.report-hero {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 40px;
+    align-items: stretch;
+    padding: 28px;
+    border: 1px solid #e5e5e5;
+    border-radius: 16px;
+    background: linear-gradient(135deg, #fbf8f2, #fff 60%);
+    color: #111;
+    text-decoration: none;
+    transition: box-shadow .3s ease, border-color .3s ease;
+}
+
+a.report-hero:hover {
+    color: #111;
+    border-color: #d2d2d2;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, .07);
+}
+
+.report-hero-cover {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #e9e9e9;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, .18);
+}
+
+.report-hero-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .6s ease;
+}
+
+a.report-hero:hover .report-hero-cover img {
+    transform: scale(1.03);
+}
+
+.report-hero-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+    padding: 8px 0;
+}
+
+.report-hero-title {
+    margin: 6px 0 14px;
+    font-family: "Merriweather", Georgia, serif;
+    font-size: clamp(26px, 2.6vw, 38px);
+    font-weight: 700;
+    line-height: 1.18;
+    color: #111;
+}
+
+.report-hero-text {
+    color: #555;
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 0 0 18px;
+    max-width: 640px;
+}
+
+.report-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: 50px;
+    background: #111;
+    color: #d7b36d;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .4px;
+}
+
+.featured-meta.dark {
+    color: #666;
+    margin-bottom: 18px;
+}
+
+.featured-meta.dark .meta-dot {
+    background: #bbb;
+}
+
+.report-download-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 30px;
+    padding: 20px 22px;
+    border: 1px dashed #d8c39a;
+    border-radius: 14px;
+    background: #fbf8f2;
+}
+
+.report-download-box strong {
+    display: block;
+    font-family: "Merriweather", Georgia, serif;
+    font-size: 17px;
+}
+
+.report-download-box span {
+    color: #777;
+    font-size: 13px;
+}
+
+.post-body,
+.post-body li,
+.post-body span,
+.post-body div,
+.post-body td,
+.post-body th,
+.post-body em,
+.post-body i,
+.post-body u,
+.post-body a,
+.post-body strong,
+.post-body b,
+.post-body small,
+.post-body font {
+    font-family: "Instrument Sans", sans-serif !important;
+    letter-spacing: normal !important;
+}
+
+.post-body p {
+    letter-spacing: normal !important;
+}
+
+.post-body p {
+    background: transparent !important;
+}
+
+.post-body li,
+.post-body td,
+.post-body th,
+.post-body div:not([class]) {
+    font-size: 15px !important;
+    line-height: 1.85 !important;
+    color: #555 !important;
+    background: transparent !important;
+}
+
+.post-body span,
+.post-body em,
+.post-body i,
+.post-body u,
+.post-body strong,
+.post-body b,
+.post-body font {
+    font-size: inherit !important;
+    line-height: inherit !important;
+    color: inherit !important;
+    background: transparent !important;
+}
+
+.post-body strong,
+.post-body b {
+    color: #222 !important;
+    font-weight: 700;
+}
+
+.post-body a,
+.post-body a * {
+    color: #9a7627 !important;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.post-body a:hover {
+    color: #111 !important;
+}
+
+.post-body h1,
+.post-body h4,
+.post-body h5,
+.post-body h6,
+.post-body h1 *,
+.post-body h2 *,
+.post-body h3 *,
+.post-body h4 *,
+.post-body h5 *,
+.post-body h6 * {
+    font-family: "Merriweather", Georgia, serif !important;
+    color: #111 !important;
+    letter-spacing: normal !important;
+    background: transparent !important;
+}
+
+.post-body h2,
+.post-body h3 {
+    letter-spacing: normal !important;
+    background: transparent !important;
+}
+
+.post-body h1 {
+    margin: 48px 0 20px;
+    font-size: clamp(23px, 2.5vw, 30px) !important;
+    font-weight: 600 !important;
+    line-height: 1.35 !important;
+}
+
+.post-body h4,
+.post-body h5,
+.post-body h6 {
+    margin: 30px 0 14px;
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    line-height: 1.45 !important;
+}
+
+.post-body h1 *,
+.post-body h2 *,
+.post-body h3 *,
+.post-body h4 *,
+.post-body h5 *,
+.post-body h6 * {
+    font-size: inherit !important;
+    line-height: inherit !important;
+}
+
+.post-body>:first-child {
+    margin-top: 0 !important;
+}
+
+.post-body ul,
+.post-body ol {
+    margin: 0 0 22px;
+    padding-left: 22px;
+}
+
+.post-body li {
+    margin-bottom: 8px;
+}
+
+.post-body li p {
+    margin: 0 !important;
+}
+
+.post-body blockquote {
+    margin: 30px 0;
+    padding: 6px 0 6px 22px;
+    border-left: 3px solid #b08a4a;
+}
+
+.post-body blockquote p {
+    color: #222 !important;
+    font-size: 17px !important;
+    font-style: italic;
+}
+
+.post-body hr {
+    border: 0;
+    border-top: 1px solid #e7e7e7;
+    opacity: 1;
+    margin: 36px 0;
+}
+
+.post-body table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 0 24px;
+    display: block;
+    overflow-x: auto;
+}
+
+.post-body td,
+.post-body th {
+    border: 1px solid #e7e7e7;
+    padding: 9px 12px;
+}
+
+.post-body th {
+    background: #fafafa !important;
+    color: #111 !important;
+    font-weight: 600;
+}
+
+.post-body {
+    overflow-wrap: anywhere;
+    word-break: normal;
+}
+
+.post-body p:empty {
+    display: none;
+}
+
+.post-body img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto !important;
+    margin: 30px auto;
+    border-radius: 14px;
+}
+
+.post-body p>img:only-child,
+.post-body figure.image img {
+    width: 100%;
+}
+
+.post-body figure,
+.post-body figure.image {
+    display: block;
+    width: 100% !important;
+    max-width: 100%;
+    margin: 30px 0;
+}
+
+.post-body figure img {
+    margin: 0 auto;
+}
+
+.post-body figure figcaption {
+    margin-top: 10px;
+    text-align: center;
+    color: #777 !important;
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+    font-style: italic;
+}
+
+.post-body figure.align-left,
+.post-body img.align-left {
+    float: left;
+    width: 45% !important;
+    margin: 6px 26px 18px 0;
+}
+
+.post-body figure.align-right,
+.post-body img.align-right {
+    float: right;
+    width: 45% !important;
+    margin: 6px 0 18px 26px;
+}
+
+.post-body::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.post-body iframe,
+.post-body video,
+.post-body embed,
+.post-body object {
+    display: block;
+    width: 100% !important;
+    max-width: 100%;
+    height: auto !important;
+    aspect-ratio: 16 / 9;
+    margin: 30px 0;
+    border: 0;
+    border-radius: 14px;
+    background: #000;
+}
+
+.post-body audio {
+    display: block;
+    width: 100%;
+    margin: 26px 0;
+}
+
+.post-body .mce-preview-object,
+.post-body [data-ephox-embed-iri] {
+    display: block;
+    max-width: 100%;
+    margin: 30px 0;
+}
+
+.post-body img+p,
+.post-body figure+p,
+.post-body iframe+p,
+.post-body video+p {
+    margin-top: 0;
+}
+
+.post-body p+figure,
+.post-body p+iframe,
+.post-body p+video,
+.post-body ul+figure,
+.post-body ol+figure {
+    margin-top: 30px;
+}
+
+.post-body figure+figure,
+.post-body figure+iframe,
+.post-body iframe+figure,
+.post-body iframe+iframe,
+.post-body video+video,
+.post-body p>img+img {
+    margin-top: 18px;
+}
+
+.post-body figure+h2,
+.post-body figure+h3,
+.post-body iframe+h2,
+.post-body iframe+h3,
+.post-body img+h2,
+.post-body img+h3,
+.post-body video+h2,
+.post-body video+h3 {
+    margin-top: 36px;
+}
+
+.post-body>:last-child {
+    margin-bottom: 0;
+}
+
+.post-body [style*="text-align: center"],
+.post-body [style*="text-align:center"] {
+    text-align: center !important;
+}
+
+.post-body [style*="text-align: right"],
+.post-body [style*="text-align:right"] {
+    text-align: right !important;
+}
+
+.post-body pre {
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 16px;
+    border-radius: 10px;
+    background: #f6f6f6;
+    font-size: 13px;
+}
+
+.post-body i[class^="ri-"],
+.post-body i[class*=" ri-"] {
+    font-family: "remixicon" !important;
+    font-style: normal;
+}
+
+.post-body a.um-btn,
+.post-body a.um-btn *,
+.post-body a.profile-story-card,
+.post-body a.profile-story-card strong {
+    color: #fff !important;
+    text-decoration: none;
+}
+
+.post-body a.um-btn-outline,
+.post-body a.um-btn-outline * {
+    color: #111 !important;
+}
+
+.post-body a.um-btn-outline:hover,
+.post-body a.um-btn-outline:hover * {
+    color: #fff !important;
+}
+
+.post-body a.profile-story-card .profile-story-label,
+.post-body a.profile-story-card i {
+    color: #d7b36d !important;
+}
+
+.post-body a.badge {
+    text-decoration: none;
+}
+
+.post-body .achievement-list i {
+    color: #b08a4a !important;
+    font-size: 20px !important;
+    line-height: 1.2 !important;
+}
+
+.post-body .report-download-box strong {
+    font-family: "Merriweather", Georgia, serif !important;
+    color: #111 !important;
+}
+
+html,
+body {
+    max-width: 100%;
+    overflow-x: clip;
+}
+
+img,
+video,
+iframe {
+    max-width: 100%;
+}
+
+.section-header,
+.featured-stories,
+section {
+    max-width: 100%;
+}
+
+.cms-ad-code,
+.cms-ad-image {
+    max-width: 100%;
+}
+
+.cms-ad-code iframe,
+.cms-ad-code ins,
+.cms-ad-code img {
+    max-width: 100% !important;
+}
+
+@media(max-width:1199.98px) {
+
+    .profiles-grid.listing {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .report-hero {
+        grid-template-columns: 240px 1fr;
+        gap: 28px;
+    }
+
+}
+
+@media(max-width:991.98px) {
+
+    .profile-hero,
+    .profile-hero.detail {
+        grid-template-columns: 1fr;
+        min-height: 0;
+    }
+
+    .profile-hero-image {
+        min-height: 0;
+        aspect-ratio: 4 / 3;
+    }
+
+    .profile-hero-body,
+    .profile-hero.detail .profile-hero-body {
+        padding: 26px 22px;
+    }
+
+}
+
+@media(max-width:767.98px) {
+
+    .profiles-grid.listing {
+        grid-template-columns: 1fr;
+    }
+
+    .report-hero {
+        grid-template-columns: 1fr;
+        padding: 18px;
+        gap: 20px;
+    }
+
+    .report-hero-cover {
+        max-width: 220px;
+    }
+
+    .report-download-box {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .post-body p,
+    .post-body li,
+    .post-body td,
+    .post-body th,
+    .post-body div:not([class]) {
+        font-size: 14px !important;
+        line-height: 1.8 !important;
+    }
+
+    .post-body img,
+    .post-body figure,
+    .post-body figure.image,
+    .post-body iframe,
+    .post-body video {
+        margin-top: 22px;
+        margin-bottom: 22px;
+        border-radius: 10px;
+    }
+
+    .post-body figure img {
+        margin: 0 auto;
+        border-radius: 10px;
+    }
+
+    .post-body figure.align-left,
+    .post-body img.align-left,
+    .post-body figure.align-right,
+    .post-body img.align-right {
+        float: none;
+        width: 100% !important;
+        margin: 22px 0;
+    }
+
+    .post-body blockquote {
+        margin: 24px 0;
+        padding-left: 16px;
+    }
+
+    .post-body blockquote p {
+        font-size: 16px !important;
+    }
+
+    .post-body ul,
+    .post-body ol {
+        padding-left: 20px;
+    }
+
+    .post-body td,
+    .post-body th {
+        padding: 8px 10px;
+        white-space: nowrap;
+    }
+
+    .report-item {
+        align-items: stretch;
+        padding: 0 0 16px;
+        margin: 0 0 16px;
+    }
+
+    .report-item:last-of-type {
+        margin-bottom: 0;
+    }
+
+    .report-image {
+        min-height: 128px;
+        border-radius: 10px;
+    }
+
+    .report-meta {
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .report-category {
+        padding: 6px 10px;
+        font-size: 10px;
+    }
+
+    .report-date {
+        font-size: 11px;
+    }
+
+    .report-title {
+        line-height: 1.35;
+    }
+
+    .report-title a {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        line-clamp: 3;
+        overflow: hidden;
+    }
+
+    .report-description {
+        font-size: 13px;
+        line-height: 1.5;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        line-clamp: 2;
+        overflow: hidden;
+    }
+
+    .report-reading {
+        font-size: 12px;
+    }
+
+    .report-reading i {
+        display: none;
+    }
+
+    .report-arrow i {
+        font-size: 17px;
+    }
+
+    .founder-badge {
+        font-size: 9px !important;
+    }
+
+    .founder-date {
+        font-size: 10px !important;
+    }
+
+    .founder-bottom span {
+        font-size: 11px !important;
+    }
+
+    .funding-badge {
+        font-size: 9px !important;
+    }
+
+    .author-date,
+    .author-date span,
+    .related-meta span,
+    .unicorn-related-meta span,
+    .unicorn-main-meta span {
+        font-size: 11px !important;
+    }
+
+    .profile-label {
+        font-size: 10px !important;
+    }
+
+    .profile-description {
+        font-size: 12px !important;
+        line-height: 1.5 !important;
+    }
+
+    .team-info span {
+        font-size: 11px !important;
+    }
+
+    .career-perk-card p {
+        font-size: 12px !important;
+        line-height: 1.55 !important;
+    }
+
+    .advertise-option p {
+        font-size: 12.5px !important;
+    }
+
+    .career-job-title div>span {
+        font-size: 11px !important;
+    }
+
+    .breadcrumb .breadcrumb-item,
+    .breadcrumb .breadcrumb-item a {
+        font-size: 11px;
+    }
+
+    .form-consent span,
+    .about-subscribe-form small {
+        font-size: 11px !important;
+    }
+
+    .breadcrumb-bar .breadcrumb {
+        flex-wrap: nowrap;
+        overflow: hidden;
+    }
+
+    .breadcrumb-bar .breadcrumb-item {
+        white-space: nowrap;
+        flex: 0 0 auto;
+    }
+
+    .breadcrumb-bar .breadcrumb-item.active {
+        display: block;
+        flex: 0 1 auto;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="search"],
+    input[type="number"],
+    input[type="url"],
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
+
+    .subscribe-btn {
+        min-height: 34px;
+    }
+
+    .view-all {
+        min-height: 36px;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .um-btn {
+        min-height: 44px;
+    }
+
+    .type-chips {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        margin-right: -24px;
+        padding: 0 24px 4px 0;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .type-chips::-webkit-scrollbar {
+        display: none;
+    }
+
+    .type-chips a {
+        flex: 0 0 auto;
+    }
+
+    .footer-top .row {
+        row-gap: 30px !important;
+    }
+
+    .footer-description {
+        margin-bottom: 20px;
+    }
+
+    .footer-links li {
+        margin-bottom: 11px;
+    }
+
+    .footer-social a {
+        width: 40px;
+        height: 40px;
+    }
+
+}
+
+@media(max-width:575.98px) {
+
+    .post-body h1 {
+        margin-top: 38px;
+        font-size: 22px !important;
+    }
+
+    .brands-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    }
+
+    .subscribe-modal .modal-content {
+        max-height: calc(100dvh - 24px);
+        overflow-y: auto;
+    }
+
+    .offcanvas.offcanvas-end {
+        width: min(88vw, 360px);
+    }
+
+}
+
+@media(max-width:359.98px) {
+
+    .report-item {
+        grid-template-columns: 1fr;
+    }
+
+    .report-image {
+        height: 170px;
+    }
+
+}
+
+
+/* =========================================================
+   OPTIONAL – mobile fixes that custom.css now overrides
+   =========================================================
+   These were in the old custom1.css. Your custom.css sets
+   different values, and custom.css wins, so they are switched
+   off here. Delete the surrounding comment marks on a block
+   to turn it back on.
+========================================================= */
+
+/* ---- 1. One report per row on phones (instead of two) ----
+
+@media (max-width: 767.98px) {
+    .reports-list { display: block; padding: 14px; }
+    .report-item {
+        grid-template-columns: 38% 1fr;
+        gap: 14px;
+        align-items: stretch;
+        padding: 0 0 16px;
+        margin: 0 0 16px;
+    }
+    .report-item:last-of-type { margin-bottom: 0; }
+    .report-image { height: 100%; min-height: 128px; border-radius: 10px; }
+    .report-meta { margin-bottom: 8px; gap: 8px; flex-wrap: wrap; }
+    .report-title { margin-bottom: 6px; font-size: 16px; line-height: 1.35; }
+    .report-bottom { padding-top: 10px; }
+    .report-arrow { width: 32px; height: 32px; flex-basis: 32px; }
+}
+
+---- end of block 1 ---- */
+
+
+/* ---- 2. Footer: less empty space on phones ----
+
+@media (max-width: 767.98px) {
+    .footer-top { padding: 44px 0 34px; }
+}
+
+---- end of block 2 ---- */
+
+
+/* ---- 3. "Load more" button big enough to tap (44px) ----
+
+@media (max-width: 767.98px) {
+    .reports-explore-btn { min-height: 44px; gap: 14px; padding: 0 18px; font-size: 13px; }
+}
+
+---- end of block 3 ---- */
