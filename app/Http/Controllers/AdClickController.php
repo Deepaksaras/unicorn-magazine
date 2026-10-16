@@ -31,11 +31,22 @@ class AdClickController extends Controller
 
     public function __invoke(Request $request, int $id)
     {
-        $ad = Advertisement::where('status', 1)->findOrFail($id);
+        // An advertisement that was deleted or switched off is not an error for
+        // the reader - a page cached on their phone can still hold the old link.
+        // Send them to the homepage instead of a 404.
+        $ad = Advertisement::where('status', 1)->find($id);
+
+        if (!$ad) {
+            return redirect()->to(url('/'));
+        }
+
         $target = $ad->url ? (Str::startsWith($ad->url, ['http://', 'https://']) ? $ad->url : url($ad->url)) : url('/');
 
-        if ($this->isRealClick($request)) {
-            try {
+        // Everything about counting sits inside one try/catch. A statistic is
+        // never worth a broken page: if anything in here goes wrong the visitor
+        // still reaches the advertiser.
+        try {
+            if ($this->isRealClick($request)) {
                 $visitor = Visitor::id($request);
                 $repeat = DB::table('ad_clicks')
                     ->where('advertisement_id', $ad->id)
@@ -58,9 +69,9 @@ class AdClickController extends Controller
                         DB::table('ad_clicks')->where('created_at', '<', now()->subDays(400))->delete();
                     }
                 }
-            } catch (\Throwable $e) {
-                report($e); // never block the visitor because of statistics
             }
+        } catch (\Throwable $e) {
+            report($e); // counted or not, the visitor must still get through
         }
 
         return redirect()->away($target);
@@ -76,8 +87,19 @@ class AdClickController extends Controller
      */
     protected function isRealClick(Request $request): bool
     {
-        return Visitor::counts($request)
-            && Visitor::hasVisited($request)
-            && Visitor::fromOurSite($request);
+        if (!Visitor::counts($request)) {
+            return false;
+        }
+
+        // method_exists keeps this working with either version of
+        // App\Support\Visitor, so uploading one file without the other can
+        // never take the site down - it only means fewer checks are applied.
+        foreach (['hasVisited', 'fromOurSite'] as $check) {
+            if (method_exists(Visitor::class, $check) && !Visitor::$check($request)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
